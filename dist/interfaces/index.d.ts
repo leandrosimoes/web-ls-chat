@@ -123,14 +123,12 @@ export interface IScrollToBottomButtonProps {
 }
 export interface IArrowProps {
     position: 'right' | 'left';
-    isSelected: boolean;
 }
 export interface IMessageProps {
     user: ILsChatUser;
     message: ILsChatMessage;
     showDateOnTop: boolean;
     showArrow: boolean;
-    isSelected: boolean;
     messageDateFormat?: string;
     onMessageItemLongPress: {
         (message: ILsChatMessage): void;

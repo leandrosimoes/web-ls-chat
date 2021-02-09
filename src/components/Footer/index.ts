@@ -40,6 +40,7 @@ export default class Footer extends BaseComponent {
         this.element = document.createElement('section')
         this.element.classList.add('ls-chat-footer')
         this.element.style.backgroundColor = this.theme.DEFAULT_BG_COLOR
+        this.element.style.color = this.theme.DEFAULT_COLOR
 
         this.element.innerHTML = `
             <div class="ls-chat-footer-input-wrapper">

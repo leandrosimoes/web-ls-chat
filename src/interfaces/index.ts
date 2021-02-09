@@ -91,7 +91,6 @@ export interface IScrollToBottomButtonProps {
 
 export interface IArrowProps {
     position: 'right' | 'left'
-    isSelected: boolean
 }
 
 export interface IMessageProps {
@@ -99,7 +98,6 @@ export interface IMessageProps {
     message: ILsChatMessage
     showDateOnTop: boolean
     showArrow: boolean
-    isSelected: boolean
     messageDateFormat?: string
     onMessageItemLongPress: {
         (message: ILsChatMessage): void

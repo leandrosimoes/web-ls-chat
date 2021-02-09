@@ -5,6 +5,7 @@ import ObserverController from '../classes/ObserverController'
 import Header from "./Header"
 import Body from "./Body"
 import Footer from "./Footer"
+import { setCurrentUser } from "../store"
 
 export default class LsChat {
     private props: IChatProps
@@ -17,6 +18,8 @@ export default class LsChat {
         this.validate()
         this.setupTheme()
         this.render()
+
+        setCurrentUser(this.props.user)
     }
 
     private setupTheme() {
