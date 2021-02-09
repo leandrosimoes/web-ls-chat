@@ -2,11 +2,14 @@ import { IBodyProps, ILsChatMessage, ILsChatUser } from "../../interfaces";
 import BaseComponent from '../BaseComponent'
 import EmptyMessages from "../EmptyMessages";
 import TypingIndicator from "../TypingIndicator";
+import Controls from "./Controls";
 import Message from "./Message";
 
 export default class Body extends BaseComponent {
     private props: IBodyProps
     private typingIndicator: TypingIndicator
+    private controls: Controls
+    private replyingMessage?: ILsChatMessage
 
     constructor(props: IBodyProps) {
         super()
@@ -15,8 +18,6 @@ export default class Body extends BaseComponent {
     }
 
     private setupEmptyMessages = (isLoading?: boolean) => {
-        this.element.innerHTML = ''
-
         const emptyMessages = new EmptyMessages({
             isLoading,
             title: this.props.interfaceTexts?.emptyMessagesTitle,
@@ -24,14 +25,12 @@ export default class Body extends BaseComponent {
             loadingMessage: this.props.interfaceTexts?.loading,
         })
 
-        emptyMessages.render(this.element)
+        const main = this.element.querySelector('main')
+        main.innerHTML = ''
+        emptyMessages.render(main)
     }
 
     public setMessages = (messages: ILsChatMessage[]) => {
-        this.element.innerHTML = ''
-
-        console.log(messages)
-
         if (!messages || messages.length === 0) {
             this.setupEmptyMessages()
             return
@@ -58,12 +57,15 @@ export default class Body extends BaseComponent {
                 message,
                 showArrow,
                 showDateOnTop,
-                onMessageItemLongPress: () => {},
+                onMessageItemLongPress: this.selectMessage,
             })
         })
 
+        const main = this.element.querySelector('main')
+        main.innerHTML = ''
+
         formatedMessages.reverse().forEach((message) => {
-            message.render(this.element)
+            message.render(main)
         })
     }
 
@@ -72,15 +74,66 @@ export default class Body extends BaseComponent {
     }
 
     public setIsTyping = (isTyping?: boolean) => {
-        if (this.element.querySelectorAll('.ls-chat-typing-indicator').length === 0) {
-            this.typingIndicator.render(this.element)
-        }
-
         if (!isTyping) {
             this.typingIndicator.element.style.display = 'none'
         } else {
             this.typingIndicator.element.style.display = 'flex'
         }
+    }
+
+    private setReplyingMessage = (message: ILsChatMessage) => {
+        this.replyingMessage = message
+        this.selectMessage()
+    }
+
+    private deleteMessage = (message: ILsChatMessage) => {
+        this.selectMessage()
+    }
+
+    private handleActionButtonPress = (action: 'reply' | 'delete' | 'release', message?: ILsChatMessage, ) => {
+        if (action === 'reply') {
+            this.setReplyingMessage(message)
+        }
+
+        if (action === 'delete') {
+            this.deleteMessage(message)
+        }
+
+        if (action === 'release') {
+            this.setReplyingMessage(message)
+        }
+    }
+
+    public selectMessage = (message?: ILsChatMessage) => {
+        const existentControls = (this.element.querySelectorAll('.ls-chat-controls') || [])[0]
+
+        if (existentControls) {
+            existentControls.classList.remove('shown')
+            setTimeout(() => {
+                existentControls.remove()
+            }, 400)
+        }
+
+        if (!message) {
+            this.element.querySelectorAll('.ls-chat-message.selected').forEach(m => m.classList.remove('selected'))
+            return
+        }
+        
+        this.controls = new Controls({
+            message,
+            onReplyControlButtonPress: (message: ILsChatMessage) => { 
+                this.handleActionButtonPress('reply', message) 
+            },
+            onDeleteControlButtonPress: (message: ILsChatMessage) => { this.handleActionButtonPress('delete', message) },
+            onPressControlBody: () => { this.handleActionButtonPress('release') },
+            user: this.props.user,
+        })
+
+        this.controls.render(this.element)
+
+        setTimeout(() => {
+            this.controls.element.classList.add('shown')
+        }, 300)
     }
 
     public render = (container: HTMLElement) => {
@@ -90,7 +143,11 @@ export default class Body extends BaseComponent {
 
         container.appendChild(this.element)
 
+        this.element.innerHTML = '<main></main>'
+        
         this.typingIndicator = new TypingIndicator()
+        this.typingIndicator.render(this.element)
+        this.typingIndicator.element.style.display = 'none'
 
         if (this.props.messages?.length > 0) {
             this.setMessages(this.props.messages)

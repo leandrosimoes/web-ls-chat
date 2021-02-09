@@ -6,6 +6,8 @@ import ImageIcons from "../../ImageIcon/ImageIcons";
 
 export default class Message extends BaseComponent {
     private props: IMessageProps
+    private _longClickTimeout: any
+    private message: HTMLElement
 
     constructor(props: IMessageProps) {
         super()
@@ -95,6 +97,21 @@ export default class Message extends BaseComponent {
         if (!this.props.showArrow && !this.props.showDateOnTop) {
             messageEl.classList.add('hide-arrow')
         }
+
+        messageEl.addEventListener('mousedown', () => {
+            clearTimeout(this._longClickTimeout)
+
+            this._longClickTimeout = setTimeout(() => {
+                this.props.onMessageItemLongPress(this.props.message)
+                this.message.classList.add('selected')
+            }, 500)
+        })
+
+        messageEl.addEventListener('mouseleave', () => {
+            clearTimeout(this._longClickTimeout)
+        })
+
+        this.message = messageEl
         
         if (this.props.showDateOnTop) {
             const messageDateEl = this.element.querySelector<HTMLElement>('.ls-chat-message-date')

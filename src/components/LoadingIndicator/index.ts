@@ -6,7 +6,7 @@ export default class LoadingIndicator extends BaseComponent {
     }
 
     public render = (container: HTMLElement) => {
-        this.element = document.createElement('div')
+        this.element = document.createElement('aside')
         this.element.classList.add('ls-chat-loading-indicator-wrap')
         this.element.style.backgroundColor = this.theme.DEFAULT_BG_COLOR
         this.element.style.color = this.theme.DEFAULT_COLOR

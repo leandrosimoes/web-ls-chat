@@ -122,11 +122,11 @@ export interface IEmptyProps {
 }
 
 export interface IControlsProps {
-    message: ILsChatMessage | undefined
+    message: ILsChatMessage
     user: ILsChatUser
     onPressControlBody: { (event: any): void }
-    onDeleteControlButtonPress: { (event: any): void }
-    onReplyControlButtonPress: { (event: any): void }
+    onDeleteControlButtonPress: { (message: ILsChatMessage, event: any): void }
+    onReplyControlButtonPress: { (message: ILsChatMessage, event: any): void }
 }
 
 export interface ILsChatUser {

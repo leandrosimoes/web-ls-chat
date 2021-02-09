@@ -21,8 +21,6 @@ export default class Header extends BaseComponent {
         this.element = document.createElement('section')
         this.element.classList.add('ls-chat-header')
 
-        console.log(this.theme)
-
         this.element.style.backgroundColor = this.theme.DEFAULT_BG_COLOR
         this.element.style.color = this.theme.DEFAULT_COLOR
 
