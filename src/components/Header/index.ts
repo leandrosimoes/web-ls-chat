@@ -24,18 +24,25 @@ export default class Header extends BaseComponent {
 
         container.appendChild(this.element)
         
-        const icon = new ImageIcon({ icon: ImageIcons.close })
 
         this.element.innerHTML = `
             <div class="ls-chat-header-image-wrapper">
                 <img src="${this.props.imageSource}" />
             </div>
             <div class="ls-chat-header-title-wrapper">
-                Example Chat!
+                ${this.props.title || ''}
             </div>
-            <button class="ls-chat-header-close-button"></button>
+            <button class="ls-chat-header-close-button" ${this.props.onCloseButtonPress ? '' : 'disabled'}></button>
         `
 
-        icon.render(this.element.querySelector('.ls-chat-header-close-button'))
+        if (this.props.onCloseButtonPress) {
+            const icon = new ImageIcon({ icon: ImageIcons.close })
+            const closeButton = this.element.querySelector('.ls-chat-header-close-button')
+
+            closeButton.addEventListener('click', this.props.onCloseButtonPress)
+
+            icon.render(closeButton)
+        }
+
     }
 }

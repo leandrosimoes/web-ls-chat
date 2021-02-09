@@ -1,0 +1,50 @@
+import { ETheme } from '../enums';
+import { ITheme } from '../interfaces';
+export declare const COMMON_COLORS: {
+    BLACK: string;
+    WHITE: string;
+    GREY: string;
+    DARK_GREY: string;
+    VERY_LIGHT_GREY: string;
+    VERY_LIGHT_BLUE: string;
+    BLUE: string;
+    ORANGE: string;
+    DARK: string;
+    LIGHT: string;
+};
+export declare const DARK_COLORS: {
+    BLACK: string;
+    WHITE: string;
+    GREY: string;
+    DARK_GREY: string;
+    VERY_LIGHT_GREY: string;
+    VERY_LIGHT_BLUE: string;
+    BLUE: string;
+    ORANGE: string;
+    DARK: string;
+    LIGHT: string;
+    RED: string;
+    YELLOW: string;
+    GREEN: string;
+};
+export declare const LIGHT_COLORS: {
+    BLACK: string;
+    WHITE: string;
+    GREY: string;
+    DARK_GREY: string;
+    VERY_LIGHT_GREY: string;
+    VERY_LIGHT_BLUE: string;
+    BLUE: string;
+    ORANGE: string;
+    DARK: string;
+    LIGHT: string;
+    RED: string;
+    YELLOW: string;
+    GREEN: string;
+};
+export declare const Theme: {
+    LightTheme: ITheme;
+    DarkTheme: ITheme;
+};
+export declare const getCurrentTheme: () => ITheme;
+export declare const setCurrentTheme: (nextTheme: ETheme) => void;
