@@ -6,6 +6,7 @@
 
             ;(async () => {
                 const { MAIN_USER: user, getRandomMessages, getRandomUsers } = window.__LSCHAT__.API
+                const { asyncForEach, delay } = window.__LSCHAT__.UTILS
                 
                 const users = await getRandomUsers(3)
                 const messages = await getRandomMessages(10, [user, ...users])
@@ -14,17 +15,53 @@
                 const options = {
                     user,
                     container,
-                    messages,
+                    messages: [],
+                    isLoading: true,
                     headerProps: {
                         isVisible: true,
                         imageSource: user.photo,
                         title: 'Example Chat!',
-                        onCloseButtonPress: () => alert('close'),
+                        onCloseButtonPress: () => {
+                            window.lsChat.setMessages([])
+                        },
                     },
-                    onSendMessage: (message) => alert(JSON.stringify(message, null, 2))
+                    onSendMessage: async (message) => {
+                        messages.push(message)
+                        window.lsChat.setMessages([...messages])
+
+                        return message
+                    },
+                    onSuccessSendMessage: async (message) => {
+                        await delay()
+
+                        await asyncForEach(messages, async (m) => {
+                            if (m.id === message.id) {
+                                message.isDelivered = true
+                            }
+                        })
+
+                        window.lsChat.setMessages([...messages])
+
+                        await delay()
+
+                        await asyncForEach(messages, async (m) => {
+                            if (m.id === message.id) {
+                                message.isRead = true
+                            }
+                        })
+
+                        window.lsChat.setMessages([...messages])
+                    },
+                    onErrorSendMessage: async (message, error) => {
+                        console.log(message, error)
+                    }
                 }
-                const lsChat = new LsChat(options)
-                console.log(lsChat)
+
+                window.lsChat = new LsChat(options)
+                
+                await delay()
+
+                window.lsChat.setMessages(messages)
             })()
 
         }

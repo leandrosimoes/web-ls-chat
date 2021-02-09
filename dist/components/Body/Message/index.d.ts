@@ -1,7 +1,7 @@
 import { IMessageProps } from "../../../interfaces";
 import BaseComponent from '../../BaseComponent';
 export default class Message extends BaseComponent {
-    props: IMessageProps;
+    private props;
     constructor(props: IMessageProps);
-    render(container: HTMLElement): void;
+    render: (container: HTMLElement) => void;
 }

@@ -5,7 +5,7 @@ import ImageIcon from "../../ImageIcon";
 import ImageIcons from "../../ImageIcon/ImageIcons";
 
 export default class Message extends BaseComponent {
-    props: IMessageProps
+    private props: IMessageProps
 
     constructor(props: IMessageProps) {
         super()
@@ -13,7 +13,7 @@ export default class Message extends BaseComponent {
         this.props = props
     }
 
-    render(container: HTMLElement) {
+    public render = (container: HTMLElement) => {
         const { message } = this.props
 
         const isFromUser = message.user.id === this.user.id

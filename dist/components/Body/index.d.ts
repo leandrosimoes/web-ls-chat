@@ -1,8 +1,10 @@
 import { IBodyProps, ILsChatMessage } from "../../interfaces";
 import BaseComponent from '../BaseComponent';
 export default class Body extends BaseComponent {
-    props: IBodyProps;
+    private props;
     constructor(props: IBodyProps);
+    private setupEmptyMessages;
     setMessages: (messages: ILsChatMessage[]) => void;
-    render(container: HTMLElement): void;
+    setIsLoading: (isLoading?: boolean) => void;
+    render: (container: HTMLElement) => void;
 }

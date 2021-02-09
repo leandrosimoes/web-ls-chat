@@ -4,5 +4,5 @@ export default class BaseComponent {
     theme: ITheme;
     user: ILsChatUser;
     constructor();
-    render(container: HTMLElement): void;
+    render: (container: HTMLElement) => void;
 }

@@ -12,7 +12,7 @@ export default class Header extends BaseComponent {
         this.props = props
     }
 
-    render(container: HTMLElement) {
+    public render = (container: HTMLElement) => {
         if (!this.props.isVisible) return
 
         this.element = document.createElement('section')

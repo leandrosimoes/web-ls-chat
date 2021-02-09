@@ -8,6 +8,7 @@ export interface IChatProps {
     messages?: ILsChatMessage[]
     messageSelectionEnabled?: boolean
     messageDateFormat?: string
+    isLoading?: boolean
     interfaceTexts?: IInterfaceTexts
     onReachEndOfMessagesList?: { (info: { distanceFromEnd: number }): void }
     onMessageTextInputChange: { (text: string): void }

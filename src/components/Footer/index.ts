@@ -5,8 +5,8 @@ import ImageIcon from "../ImageIcon";
 import ImageIcons from "../ImageIcon/ImageIcons";
 
 export default class Footer extends BaseComponent {
-    props: IFooterProps
-    replyingMessage?: ILsChatMessage
+    private props: IFooterProps
+    private replyingMessage?: ILsChatMessage
 
     constructor(props: IFooterProps) {
         super()
@@ -14,12 +14,12 @@ export default class Footer extends BaseComponent {
         this.props = props
     }
 
-    handleOnSendMessageButtonPress = () => {
+    public handleOnSendMessageButtonPress = async () => {
         const textarea = this.element.querySelector('textarea')
         const text = textarea.value
 
         if (text) {
-            this.props.onSendMessage({
+            const newMessage = ({
                 id: guid(),
                 text,
                 time: new Date().getTime(),
@@ -27,16 +27,24 @@ export default class Footer extends BaseComponent {
                 replyingTo: this.replyingMessage,
             })
 
-            textarea.value = ''
-            textarea.focus()
+            try {
+                await this.props.onSendMessage(newMessage)
+
+                textarea.value = ''
+                textarea.focus()
+
+                await this.props.onSuccessSendMessage(newMessage)
+            } catch (error) {
+                await this.props.onErrorSendMessage(newMessage, error)
+            }
         }
     }
 
-    setReplyingMessage = (message: ILsChatMessage) => {
+    public setReplyingMessage = (message: ILsChatMessage) => {
         this.replyingMessage = message
     }
 
-    render(container: HTMLElement) {
+    public render = (container: HTMLElement) => {
         this.element = document.createElement('section')
         this.element.classList.add('ls-chat-footer')
         this.element.style.backgroundColor = this.theme.DEFAULT_BG_COLOR

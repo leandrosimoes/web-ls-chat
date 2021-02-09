@@ -1,9 +1,10 @@
 import { IBodyProps, ILsChatMessage, ILsChatUser } from "../../interfaces";
 import BaseComponent from '../BaseComponent'
+import EmptyMessages from "../EmptyMessages";
 import Message from "./Message";
 
 export default class Body extends BaseComponent {
-    props: IBodyProps
+    private props: IBodyProps
 
     constructor(props: IBodyProps) {
         super()
@@ -11,8 +12,26 @@ export default class Body extends BaseComponent {
         this.props = props
     }
 
-    setMessages = (messages: ILsChatMessage[]) => {
+    private setupEmptyMessages = (isLoading?: boolean) => {
         this.element.innerHTML = ''
+
+        const emptyMessages = new EmptyMessages({
+            isLoading,
+            title: this.props.interfaceTexts?.emptyMessagesTitle,
+            message: this.props.interfaceTexts?.emptyMessagesMessage,
+            loadingMessage: this.props.interfaceTexts?.loading,
+        })
+
+        emptyMessages.render(this.element)
+    }
+
+    public setMessages = (messages: ILsChatMessage[]) => {
+        this.element.innerHTML = ''
+
+        if (!messages || messages.length === 0) {
+            this.setupEmptyMessages()
+            return
+        }
         
         const { user } = this.props
 
@@ -44,7 +63,11 @@ export default class Body extends BaseComponent {
         })
     }
 
-    render(container: HTMLElement) {
+    public setIsLoading = (isLoading?: boolean) => {
+        this.setupEmptyMessages(isLoading)
+    }
+
+    public render = (container: HTMLElement) => {
         this.element = document.createElement('section')
         this.element.classList.add('ls-chat-body')
         this.element.style.backgroundColor = this.theme.DEFAULT_BG_COLOR

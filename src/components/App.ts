@@ -1,7 +1,6 @@
 import { ETheme } from "../enums"
-import { IChatProps, ILsChatMessage, ITheme } from "../interfaces"
-import { getCurrentTheme, setCurrentTheme, Theme } from '../theme'
-import ObserverController from '../classes/ObserverController'
+import { IChatProps, ILsChatMessage } from "../interfaces"
+import { setCurrentTheme } from '../theme'
 import Header from "./Header"
 import Body from "./Body"
 import Footer from "./Footer"
@@ -9,8 +8,8 @@ import { setCurrentUser } from "../store"
 
 export default class LsChat {
     private props: IChatProps
-    private theme: ITheme
     private main: HTMLDivElement
+    private body: Body
 
     constructor(props: IChatProps) {
         this.props = props
@@ -30,8 +29,6 @@ export default class LsChat {
         } else {
             setCurrentTheme(ETheme.LIGHT)
         }
-
-        this.theme = getCurrentTheme()
     }
 
     private validate() {
@@ -46,6 +43,10 @@ export default class LsChat {
         container.classList.add('ls-chat-wrapper')
 
         this.prepareContent()
+
+        if  (this.props.isLoading) {
+            this.setIsLoading(this.props.isLoading)
+        }
     }
 
     private prepareContent() {
@@ -67,7 +68,7 @@ export default class LsChat {
     }
 
     private prepareBody() {
-        const body = new Body({
+        this.body = new Body({
             messageSelectionEnabled: this.props.messageSelectionEnabled,
             messages: this.props.messages,
             onDeleteMessage: this.props.onDeleteMessage,
@@ -80,7 +81,7 @@ export default class LsChat {
             onReachEndOfMessagesList: this.props.onReachEndOfMessagesList,
 
         })
-        body.render(this.main)
+        this.body.render(this.main)
     }
 
     private prepareFooter() {
@@ -94,6 +95,14 @@ export default class LsChat {
             onMessageTextInputChange: this.props.onMessageTextInputChange,
         })
         footer.render(this.main)
+    }
+
+    public setMessages = (messages: ILsChatMessage[]) => {
+        this.body.setMessages(messages)
+    }
+
+    public setIsLoading = (isLoading?: boolean) => {
+        this.body.setIsLoading(isLoading)
     }
 
 }

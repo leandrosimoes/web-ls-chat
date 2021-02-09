@@ -12,7 +12,7 @@ export default class Icon extends BaseComponent {
         this.props = props
     }
 
-    render(container: Node) {
+    public render = (container: Node) => {
         this.element = document.createElement('img')
 
         this.element.setAttribute('src', this.props.icon)
