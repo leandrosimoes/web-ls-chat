@@ -13,4 +13,5 @@ export default class LsChat {
     private prepareFooter;
     setMessages: (messages: ILsChatMessage[]) => void;
     setIsLoading: (isLoading?: boolean) => void;
+    setIsTyping: (isLoading?: boolean) => void;
 }

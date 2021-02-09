@@ -43,10 +43,7 @@ export default class LsChat {
         container.classList.add('ls-chat-wrapper')
 
         this.prepareContent()
-
-        if  (this.props.isLoading) {
-            this.setIsLoading(this.props.isLoading)
-        }
+        this.setIsLoading(this.props.isLoading)
     }
 
     private prepareContent() {
@@ -103,6 +100,10 @@ export default class LsChat {
 
     public setIsLoading = (isLoading?: boolean) => {
         this.body.setIsLoading(isLoading)
+    }
+
+    public setIsTyping = (isLoading?: boolean) => {
+        this.body.setIsTyping(isLoading)
     }
 
 }

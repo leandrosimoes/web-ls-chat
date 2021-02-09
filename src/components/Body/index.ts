@@ -1,10 +1,12 @@
 import { IBodyProps, ILsChatMessage, ILsChatUser } from "../../interfaces";
 import BaseComponent from '../BaseComponent'
 import EmptyMessages from "../EmptyMessages";
+import TypingIndicator from "../TypingIndicator";
 import Message from "./Message";
 
 export default class Body extends BaseComponent {
     private props: IBodyProps
+    private typingIndicator: TypingIndicator
 
     constructor(props: IBodyProps) {
         super()
@@ -27,6 +29,8 @@ export default class Body extends BaseComponent {
 
     public setMessages = (messages: ILsChatMessage[]) => {
         this.element.innerHTML = ''
+
+        console.log(messages)
 
         if (!messages || messages.length === 0) {
             this.setupEmptyMessages()
@@ -67,12 +71,26 @@ export default class Body extends BaseComponent {
         this.setupEmptyMessages(isLoading)
     }
 
+    public setIsTyping = (isTyping?: boolean) => {
+        if (this.element.querySelectorAll('.ls-chat-typing-indicator').length === 0) {
+            this.typingIndicator.render(this.element)
+        }
+
+        if (!isTyping) {
+            this.typingIndicator.element.style.display = 'none'
+        } else {
+            this.typingIndicator.element.style.display = 'flex'
+        }
+    }
+
     public render = (container: HTMLElement) => {
         this.element = document.createElement('section')
         this.element.classList.add('ls-chat-body')
         this.element.style.backgroundColor = this.theme.DEFAULT_BG_COLOR
 
         container.appendChild(this.element)
+
+        this.typingIndicator = new TypingIndicator()
 
         if (this.props.messages?.length > 0) {
             this.setMessages(this.props.messages)

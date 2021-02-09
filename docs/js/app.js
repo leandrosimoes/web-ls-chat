@@ -9,7 +9,7 @@
                 const { asyncForEach, delay } = window.__LSCHAT__.UTILS
                 
                 const users = await getRandomUsers(3)
-                const messages = await getRandomMessages(10, [user, ...users])
+                let messages = await getRandomMessages(10, users)
                 const container = document.querySelector('#container')
 
                 const options = {
@@ -26,7 +26,7 @@
                         },
                     },
                     onSendMessage: async (message) => {
-                        messages.push(message)
+                        messages = [...messages, message]
                         window.lsChat.setMessages([...messages])
 
                         return message
@@ -51,6 +51,25 @@
                         })
 
                         window.lsChat.setMessages([...messages])
+
+                        window.lsChat.setIsTyping(true)
+
+                        await delay()
+
+                        const [replyMessage] = await getRandomMessages(1, users)
+
+                        replyMessage.id = 'AQUI!'
+                        replyMessage.time = new Date().getTime()
+
+                        // if (faker.random.boolean()) {
+                            replyMessage.replyingTo = { ...message }
+                        // }
+
+                        messages = [...messages, replyMessage]
+
+                        window.lsChat.setMessages([...messages])
+
+                        window.lsChat.setIsTyping(false)
                     },
                     onErrorSendMessage: async (message, error) => {
                         console.log(message, error)

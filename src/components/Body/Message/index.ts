@@ -1,4 +1,4 @@
-import { IMessageProps } from "../../../interfaces";
+import { ILsChatMessage, IMessageProps } from "../../../interfaces";
 import { formatDate } from "../../../utils";
 import BaseComponent from '../../BaseComponent'
 import ImageIcon from "../../ImageIcon";
@@ -13,6 +13,38 @@ export default class Message extends BaseComponent {
         this.props = props
     }
 
+    private wrapReplyMessageIfNecessary = (innerHTML: string, replyingTo?: ILsChatMessage) => {
+        if (!replyingTo) return innerHTML
+
+        const isFromUser = replyingTo.user.id === this.user.id
+
+        const replyMessageWrap = document.createElement('div')
+        replyMessageWrap.classList.add('ls-chat-reply-message-wrap')
+
+        replyMessageWrap.innerHTML = `
+            <div class="ls-chat-message-reply">
+                <div class="ls-chat-message-user-wrap">
+                    <img src="${replyingTo.user.photo}" />
+                    <span>${replyingTo.user.name}</span>
+                </div>
+                <div class="ls-chat-message-text-wrap">
+                    ${replyingTo.text}
+                </div>
+            </div>
+            ${innerHTML}
+        `
+
+        const messageEl = replyMessageWrap.querySelector<HTMLElement>('.ls-chat-message-reply')
+        
+        if (isFromUser) {
+            messageEl.style.backgroundColor = this.theme.USER_MESSAGE_BG_COLOR
+        } else {
+            messageEl.style.backgroundColor = this.theme.MESSAGE_BG_COLOR
+        }
+
+        return replyMessageWrap.innerHTML
+    }
+
     public render = (container: HTMLElement) => {
         const { message } = this.props
 
@@ -22,10 +54,11 @@ export default class Message extends BaseComponent {
         this.element = document.createElement('article')
         this.element.classList.add('ls-chat-message-wrap')
 
-        this.element.innerHTML = `
-            <div class="ls-chat-message-date hidden">
-                ${formatDate(messageDate, this.props.messageDateFormat)}
-            </div>
+        if (message.replyingTo) {
+            this.element.classList.add('ls-chat-message-wrap-with-reply')
+        }
+
+        const html = `
             <div class="ls-chat-message waiting">
                 <div class="ls-chat-message-user-wrap">
                     <img src="${message.user.photo}" />
@@ -39,6 +72,13 @@ export default class Message extends BaseComponent {
                     <span class="ls-chat-message-info-icon"></span>
                 </div>
             <div>
+        `
+
+        this.element.innerHTML = `
+            <div class="ls-chat-message-date hidden">
+                ${formatDate(messageDate, this.props.messageDateFormat)}
+            </div>
+            ${this.wrapReplyMessageIfNecessary(html, message.replyingTo)}
         `
 
         const messageEl = this.element.querySelector<HTMLElement>('.ls-chat-message')
