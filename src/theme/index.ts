@@ -71,17 +71,9 @@ export const Theme = {
 }
 
 export const getCurrentTheme = () => {
-    if (document.readyState === 'complete') {
-        const currentTheme = document.querySelector<HTMLDivElement>('.ls-chat')
-        
-        if (!currentTheme) return Theme.LightTheme
-
-        return localStorage.getItem('lstheme') === ETheme.DARK.toString() 
-            ? Theme.DarkTheme 
-            : Theme.LightTheme
-    }
-
-    return Theme.LightTheme
+    return localStorage.getItem('lstheme') === ETheme.DARK.toString() 
+        ? Theme.DarkTheme 
+        : Theme.LightTheme
 }
 
 export const setCurrentTheme = (nextTheme: ETheme) => {

@@ -17,6 +17,7 @@
                     container,
                     messages: [],
                     isLoading: true,
+                    theme: 'DARK',
                     headerProps: {
                         isVisible: true,
                         imageSource: user.photo,
@@ -57,13 +58,11 @@
                         await delay()
 
                         const [replyMessage] = await getRandomMessages(1, users)
-
-                        replyMessage.id = 'AQUI!'
                         replyMessage.time = new Date().getTime()
 
-                        // if (faker.random.boolean()) {
+                        if (faker.random.boolean()) {
                             replyMessage.replyingTo = { ...message }
-                        // }
+                        }
 
                         messages = [...messages, replyMessage]
 

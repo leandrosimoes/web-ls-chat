@@ -22,17 +22,22 @@ export default class Message extends BaseComponent {
         replyMessageWrap.classList.add('ls-chat-reply-message-wrap')
 
         replyMessageWrap.innerHTML = `
-            <div class="ls-chat-message-reply">
-                <div class="ls-chat-message-user-wrap">
-                    <img src="${replyingTo.user.photo}" />
-                    <span>${replyingTo.user.name}</span>
+            <div class="ls-chat-message-wrap-with-reply">
+                <div class="ls-chat-message-reply">
+                    <div class="ls-chat-message-user-wrap">
+                        <img src="${replyingTo.user.photo}" />
+                        <span>${replyingTo.user.name}</span>
+                    </div>
+                    <div class="ls-chat-message-text-wrap">
+                        ${replyingTo.text}
+                    </div>
                 </div>
-                <div class="ls-chat-message-text-wrap">
-                    ${replyingTo.text}
-                </div>
+                ${innerHTML}
             </div>
-            ${innerHTML}
         `
+
+        const replyWrap = replyMessageWrap.querySelector<HTMLElement>('.ls-chat-message-wrap-with-reply')
+        replyWrap.style.backgroundColor = this.theme.MESSAGE_REPLY_BG_COLOR
 
         const messageEl = replyMessageWrap.querySelector<HTMLElement>('.ls-chat-message-reply')
         
@@ -53,10 +58,6 @@ export default class Message extends BaseComponent {
 
         this.element = document.createElement('article')
         this.element.classList.add('ls-chat-message-wrap')
-
-        if (message.replyingTo) {
-            this.element.classList.add('ls-chat-message-wrap-with-reply')
-        }
 
         const html = `
             <div class="ls-chat-message waiting">
@@ -95,8 +96,6 @@ export default class Message extends BaseComponent {
             messageEl.classList.add('hide-arrow')
         }
         
-        this.element.querySelector<HTMLElement>('.ls-chat-message-text-wrap').style.color = this.theme.DEFAULT_COLOR
-
         if (this.props.showDateOnTop) {
             const messageDateEl = this.element.querySelector<HTMLElement>('.ls-chat-message-date')
             messageDateEl.classList.remove('hidden')

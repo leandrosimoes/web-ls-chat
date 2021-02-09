@@ -8,7 +8,6 @@ export interface IChatProps {
     messageSelectionEnabled?: boolean;
     messageDateFormat?: string;
     isLoading?: boolean;
-    isTyping?: boolean;
     interfaceTexts?: IInterfaceTexts;
     onReachEndOfMessagesList?: {
         (info: {
