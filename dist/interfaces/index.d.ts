@@ -149,16 +149,16 @@ export interface IEmptyProps {
     loadingMessage?: string;
 }
 export interface IControlsProps {
-    message: ILsChatMessage | undefined;
+    message: ILsChatMessage;
     user: ILsChatUser;
     onPressControlBody: {
         (event: any): void;
     };
     onDeleteControlButtonPress: {
-        (event: any): void;
+        (message: ILsChatMessage, event: any): void;
     };
     onReplyControlButtonPress: {
-        (event: any): void;
+        (message: ILsChatMessage, event: any): void;
     };
 }
 export interface ILsChatUser {

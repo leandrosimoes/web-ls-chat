@@ -72,6 +72,16 @@
                     },
                     onErrorSendMessage: async (message, error) => {
                         console.log(message, error)
+                    },
+                    onDeleteMessage: async (message) => {
+                        return message
+                    },
+                    onSuccessDeleteMessage: (message) => {
+                        messages = messages.filter(m => m.id !== message.id)
+                        window.lsChat.setMessages([...messages])
+                    },
+                    onErrorDeleteMessage: (error) => {
+                        console.log(error)
                     }
                 }
 

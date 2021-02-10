@@ -9,7 +9,6 @@ export default class Body extends BaseComponent {
     private props: IBodyProps
     private typingIndicator: TypingIndicator
     private controls: Controls
-    private replyingMessage?: ILsChatMessage
 
     constructor(props: IBodyProps) {
         super()
@@ -81,18 +80,22 @@ export default class Body extends BaseComponent {
         }
     }
 
-    private setReplyingMessage = (message: ILsChatMessage) => {
-        this.replyingMessage = message
-        this.selectMessage()
-    }
+    private deleteMessage = async (message: ILsChatMessage) => {
+        try {
+            await this.props.onDeleteMessage(message)
 
-    private deleteMessage = (message: ILsChatMessage) => {
-        this.selectMessage()
+            this.props.onSuccessDeleteMessage(message)
+
+            this.selectMessage()
+        } catch (error) {
+            this.props.onErrorDeleteMessage(error)
+        }
     }
 
     private handleActionButtonPress = (action: 'reply' | 'delete' | 'release', message?: ILsChatMessage, ) => {
         if (action === 'reply') {
-            this.setReplyingMessage(message)
+            this.props.setReplyingMessage(message)
+            this.selectMessage()
         }
 
         if (action === 'delete') {
@@ -100,11 +103,11 @@ export default class Body extends BaseComponent {
         }
 
         if (action === 'release') {
-            this.setReplyingMessage(message)
+            this.selectMessage()
         }
     }
 
-    public selectMessage = (message?: ILsChatMessage) => {
+    public selectMessage = (message?: ILsChatMessage) => {      
         const existentControls = (this.element.querySelectorAll('.ls-chat-controls') || [])[0]
 
         if (existentControls) {

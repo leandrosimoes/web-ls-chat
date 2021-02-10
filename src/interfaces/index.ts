@@ -64,7 +64,6 @@ export interface IIconProps {
 export interface IReplyingMessageProps {
     user: ILsChatUser
     message?: ILsChatMessage
-    isVisible: boolean
     onCancelReplyingMessage: { (): void }
 }
 
@@ -74,6 +73,7 @@ export interface IBodyProps {
     messageSelectionEnabled: boolean
     messageDateFormat?: string
     interfaceTexts?: IInterfaceTexts
+    setReplyingMessage: { (message: ILsChatMessage): void }
     onReachEndOfMessagesList?: { (info: { distanceFromEnd: number }): void }
     onReplyControlPress: { (replyingMessage: ILsChatMessage): void }
     onDeleteMessage: { (message: ILsChatMessage): Promise<ILsChatMessage> }

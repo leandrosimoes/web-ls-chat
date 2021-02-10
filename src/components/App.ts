@@ -5,11 +5,13 @@ import Header from "./Header"
 import Body from "./Body"
 import Footer from "./Footer"
 import { setCurrentUser } from "../store"
+import ReplyingMessage from "./Body/ReplyingMessage"
 
 export default class LsChat {
     private props: IChatProps
     private main: HTMLDivElement
     private body: Body
+    private replyingMessage?: ILsChatMessage
 
     constructor(props: IChatProps) {
         this.props = props
@@ -64,10 +66,48 @@ export default class LsChat {
         header.render(this.main)
     }
 
+    private setReplyingMessage = (message?: ILsChatMessage) => {
+        this.replyingMessage = message
+
+        if (!this.replyingMessage) {
+            const existentReplyingMessage = this.body.element.querySelector('.ls-chat-replying-message-wrap')
+            if  (existentReplyingMessage) {
+                existentReplyingMessage.classList.remove('shown')
+
+                setTimeout(() => {
+                    existentReplyingMessage.remove()
+                }, 1000);
+            }
+
+            return
+        }
+
+        const replyingMessage = new ReplyingMessage({
+            user: this.props.user,
+            message,
+            onCancelReplyingMessage: () => {
+                this.replyingMessage = undefined
+            },
+        })
+
+        replyingMessage.render(this.body.element)
+    }
+
+    private onSendMessage = async (message: ILsChatMessage) => {
+        message.replyingTo = this.replyingMessage
+
+        this.setReplyingMessage()
+
+        const result = await this.props.onSendMessage(message)
+
+        return result
+    }
+
     private prepareBody() {
         this.body = new Body({
             messageSelectionEnabled: this.props.messageSelectionEnabled,
             messages: this.props.messages,
+            setReplyingMessage: this.setReplyingMessage,
             onDeleteMessage: this.props.onDeleteMessage,
             onErrorDeleteMessage: this.props.onErrorDeleteMessage,
             onReplyControlPress: (replyingMessage: ILsChatMessage) => {},
@@ -85,7 +125,7 @@ export default class LsChat {
         const footer = new Footer({
             onCancelReplyingMessage: () => {},
             onErrorSendMessage: this.props.onErrorSendMessage,
-            onSendMessage: this.props.onSendMessage,
+            onSendMessage: this.onSendMessage,
             onSuccessSendMessage: this.props.onSuccessSendMessage,
             user: this.props.user,
             interfaceTexts: this.props.interfaceTexts,

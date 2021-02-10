@@ -379,6 +379,7 @@
     flex: 1;
     height: 65px;
     outline: none;
+    z-index: 11;
 }
 
 .ls-chat-controls.from-user .ls-chat-message-action-button:nth-child(2n) {
@@ -392,11 +393,61 @@
 
 .ls-chat-message-controls-clickable-overlay {
     position: fixed;
-    top: 120px;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 60px;
     z-index: 10;
+}
+
+.ls-chat-replying-message-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding-top: 20px;
+    z-index: 2;
+}
+
+.ls-chat-replying-message-wrap:not(.shown) {
+    bottom: -200px;
+    transition: all .2s cubic-bezier(0.29, -0.6, 0.92, 0.73);
+}
+
+.ls-chat-replying-message-wrap.shown {
+    bottom: -50px;
+    transition: all .2s cubic-bezier(0.32, 1.93, 0.58, 1);
+}
+
+.ls-chat-replying-message-wrap .ls-chat-message-wrap.left,
+.ls-chat-replying-message-wrap .ls-chat-message-wrap.right {
+    align-items: center;
+}
+
+.ls-chat-replying-message-wrap .ls-chat-message {
+    pointer-events: none;
+}
+
+.ls-chat-replying-message-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 170px;
+    z-index: 10;
+}
+
+.ls-chat-replying-message-wrap button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.ls-chat-replying-message-wrap button img {
+    width: 20px;
+    height: 20px;
 }
 
 /* KEYFRAMES */

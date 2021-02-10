@@ -14,6 +14,7 @@ export default class Icon extends BaseComponent {
 
     public render = (container: Node) => {
         this.element = document.createElement('img')
+        this.element.classList.add('ls-chat-icon')
 
         this.element.setAttribute('src', this.props.icon)
         
