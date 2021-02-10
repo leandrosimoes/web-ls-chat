@@ -71,7 +71,7 @@ export default class Message extends BaseComponent {
                     ${message.text}
                 </div>
                 <div class="ls-chat-message-info-wrap">
-                    <span class="ls-chat-message-info-time">${formatDate(messageDate, 'HH:ss')}</span>
+                    <span class="ls-chat-message-info-time">${formatDate(messageDate, 'HH:mm')}</span>
                     <span class="ls-chat-message-info-icon"></span>
                 </div>
             <div>
