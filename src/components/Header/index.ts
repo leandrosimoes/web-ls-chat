@@ -38,7 +38,7 @@ export default class Header extends BaseComponent {
 
         if (this.props.onCloseButtonPress) {
             const icon = new ImageIcon({ icon: ImageIcons.close })
-            const closeButton = this.element.querySelector('.ls-chat-header-close-button')
+            const closeButton = this.element.querySelector<HTMLElement>('.ls-chat-header-close-button')
 
             closeButton.addEventListener('click', this.props.onCloseButtonPress)
 

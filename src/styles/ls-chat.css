@@ -78,6 +78,7 @@
 
 .ls-chat-header-close-button {
     outline: none;
+    background: transparent;
 }
 
 .ls-chat-header-close-button:disabled {
@@ -112,6 +113,8 @@
     padding: 10px;
     resize: none;
     line-height: 40px;
+    overflow: hidden;
+    border: none;
 }
 
 .ls-chat-footer-message-buttom-wrapper {
@@ -126,6 +129,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
 }
 
 .ls-chat-footer-message-buttom-wrapper button img {
@@ -443,6 +447,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
+    background-color: transparent;
 }
 
 .ls-chat-replying-message-wrap button img {

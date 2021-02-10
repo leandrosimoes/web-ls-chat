@@ -37,7 +37,7 @@ export default class Controls extends BaseComponent {
         releaseOverlay.addEventListener('click', this.props.onPressControlBody)
 
 
-        const replyButton = this.element.querySelector('.ls-chat-message-reply-action')
+        const replyButton = this.element.querySelector<HTMLElement>('.ls-chat-message-reply-action')
         const replyIcon = new ImageIcon({ icon: ImageIcons.reply })
         replyIcon.render(replyButton)
 
@@ -45,13 +45,16 @@ export default class Controls extends BaseComponent {
             this.props.onReplyControlButtonPress(this.props.message, event)
         })
 
+        replyButton.style.backgroundColor = this.theme.MESSAGE_SELECTED_BG_COLOR
+
         if (isFromUser) {
-            const deleteButton = this.element.querySelector('.ls-chat-message-delete-action')
+            const deleteButton = this.element.querySelector<HTMLElement>('.ls-chat-message-delete-action')
             const deleteIcon = new ImageIcon({ icon: ImageIcons.trash })
             deleteIcon.render(deleteButton)
             deleteButton.addEventListener('click', (event) => {
                 this.props.onDeleteControlButtonPress(this.props.message, event)
             })
+            deleteButton.style.backgroundColor = this.theme.MESSAGE_SELECTED_BG_COLOR
         }
 
         container.appendChild(this.element)
