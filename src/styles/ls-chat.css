@@ -151,6 +151,10 @@
     align-items: flex-end;
 }
 
+.ls-chat-message-wrap.right .ls-chat-message-user-wrap {
+    display: none;
+}
+
 .ls-chat-message-reply,
 .ls-chat-message {
     max-width: 70%;

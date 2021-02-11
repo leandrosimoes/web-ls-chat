@@ -12,6 +12,10 @@ export default class Header extends BaseComponent {
         this.props = props
     }
 
+    public setTitle = (text: string) => {
+        this.element.querySelector('.ls-chat-header-title-wrapper').innerHTML = text
+    }
+
     public render = (container: HTMLElement) => {
         if (!this.props.isVisible) return
 

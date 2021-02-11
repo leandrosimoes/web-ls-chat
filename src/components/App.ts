@@ -11,6 +11,7 @@ export default class LsChat {
     private props: IChatProps
     private main: HTMLDivElement
     private body: Body
+    private header: Header
     private replyingMessage?: ILsChatMessage
 
     constructor(props: IChatProps) {
@@ -62,8 +63,8 @@ export default class LsChat {
     }
 
     private prepareHeader() {
-        const header = new Header(this.props.headerProps)
-        header.render(this.main)
+        this.header = new Header(this.props.headerProps)
+        this.header.render(this.main)
     }
 
     private setReplyingMessage = (message?: ILsChatMessage) => {
@@ -146,4 +147,11 @@ export default class LsChat {
         this.body.setIsTyping(isLoading)
     }
 
+    public setTitle = (text: string) => {
+        this.header.setTitle(text)
+    }
+
+    public destroy = () => {
+        this.main.remove()
+    }
 }
