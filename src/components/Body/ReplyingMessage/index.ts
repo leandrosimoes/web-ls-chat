@@ -26,6 +26,7 @@ export default class ReplyingMessage extends BaseComponent {
         const { message: replyingMessage } = this.props
 
         replyingMessage.replyingTo = undefined
+        replyingMessage.text = `${replyingMessage.text.substr(0, 80)}...`
 
         const message = new Message({
             message: replyingMessage,

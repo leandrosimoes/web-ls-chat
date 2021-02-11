@@ -33,9 +33,11 @@ export default class Controls extends BaseComponent {
             `
         }
 
-        const releaseOverlay = this.element.querySelector('.ls-chat-message-controls-clickable-overlay')
+        const releaseOverlay = this.element.querySelector<HTMLElement>('.ls-chat-message-controls-clickable-overlay')
         releaseOverlay.addEventListener('click', this.props.onPressControlBody)
 
+        const lsChatEl = document.querySelector<HTMLElement>('.ls-chat')
+        const lsChatHeaderEl = document.querySelector<HTMLElement>('.ls-chat-header')
 
         const replyButton = this.element.querySelector<HTMLElement>('.ls-chat-message-reply-action')
         const replyIcon = new ImageIcon({ icon: ImageIcons.reply })

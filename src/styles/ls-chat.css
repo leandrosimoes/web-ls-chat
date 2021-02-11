@@ -78,7 +78,8 @@
 
 .ls-chat-header-close-button {
     outline: none;
-    background: transparent;
+    border: none;
+    background-color: transparent;
 }
 
 .ls-chat-header-close-button:disabled {
@@ -100,6 +101,7 @@
     display: flex;
     height: 60px;
     border-top: 1px solid var(--ls-chat-border);
+    z-index: 11;
 }
 
 .ls-chat-footer-input-wrapper {
@@ -383,6 +385,7 @@
     flex: 1;
     height: 65px;
     outline: none;
+    border: none;
     z-index: 11;
 }
 
@@ -400,7 +403,7 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 60px;
+    bottom: 0;
     z-index: 10;
 }
 
@@ -439,7 +442,7 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 170px;
+    bottom: 0;
     z-index: 10;
 }
 
@@ -448,6 +451,9 @@
     top: 10px;
     right: 10px;
     background-color: transparent;
+    outline: none;
+    border: none;
+    z-index: 11;
 }
 
 .ls-chat-replying-message-wrap button img {
