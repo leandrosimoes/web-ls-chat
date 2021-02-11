@@ -10,7 +10,7 @@ export interface IChatProps {
     messageDateFormat?: string
     isLoading?: boolean
     interfaceTexts?: IInterfaceTexts
-    onReachEndOfMessagesList?: { (info: { distanceFromEnd: number }): void }
+    onReachEndOfMessagesList?: { (): void }
     onMessageTextInputChange: { (text: string): void }
     onSendMessage: { (message: ILsChatMessage): Promise<ILsChatMessage> }
     onSuccessSendMessage: { (message: ILsChatMessage): void }
@@ -74,7 +74,6 @@ export interface IBodyProps {
     messageDateFormat?: string
     interfaceTexts?: IInterfaceTexts
     setReplyingMessage: { (message: ILsChatMessage): void }
-    onReachEndOfMessagesList?: { (info: { distanceFromEnd: number }): void }
     onReplyControlPress: { (replyingMessage: ILsChatMessage): void }
     onDeleteMessage: { (message: ILsChatMessage): Promise<ILsChatMessage> }
     onSuccessDeleteMessage: { (message: ILsChatMessage): void }

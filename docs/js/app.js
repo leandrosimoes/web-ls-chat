@@ -5,7 +5,7 @@
         if (document.readyState === 'complete') {
 
             ;(async () => {
-                const { MAIN_USER: user, getRandomMessages, getRandomUsers } = window.__LSCHAT__.API
+                const { MAIN_USER: user, getRandomMessages, getRandomUsers, getPrevRandomMessages } = window.__LSCHAT__.API
                 const { asyncForEach, delay } = window.__LSCHAT__.UTILS
                 
                 const users = await getRandomUsers(3)
@@ -23,7 +23,7 @@
                         imageSource: user.photo,
                         title: 'Example Chat!',
                         onCloseButtonPress: () => {
-                            window.lsChat.setMessages([])
+                            this.lsChat.destroy()
                         },
                     },
                     onSendMessage: async (message) => {
@@ -82,6 +82,17 @@
                     },
                     onErrorDeleteMessage: (error) => {
                         console.log(error)
+                    },
+                    onReachEndOfMessagesList: async () => {
+                        window.lsChat.setIsFetching(true)
+
+                        await delay()
+
+                        const prevMessages = await getPrevRandomMessages(users)
+                        messages = [...prevMessages, ...messages]
+
+                        window.lsChat.setMessages(messages)
+                        window.lsChat.setIsFetching(false)
                     }
                 }
 

@@ -13,6 +13,7 @@ export default class LsChat {
     private body: Body
     private header: Header
     private replyingMessage?: ILsChatMessage
+    private isScrollEventAlreadySet: boolean
 
     constructor(props: IChatProps) {
         this.props = props
@@ -60,6 +61,26 @@ export default class LsChat {
         this.prepareFooter()
 
         container.appendChild(this.main)
+
+        if (this.props.onReachEndOfMessagesList) {
+            this.setScrollListener()
+        }
+    }
+    
+    private scrollEventListener =  (event: any) => {
+        const isEndReached = (event.target.scrollHeight + event.target.scrollTop - event.target.offsetHeight - 1) <= 0
+
+        if (isEndReached && this.props.onReachEndOfMessagesList && typeof this.props.onReachEndOfMessagesList === 'function') {
+            this.props.onReachEndOfMessagesList()
+        }
+    }
+
+    private setScrollListener = () => {
+        if (this.isScrollEventAlreadySet) return
+
+        document.querySelector('.ls-chat main').addEventListener('scroll', this.scrollEventListener)
+
+        this.isScrollEventAlreadySet = true
     }
 
     private prepareHeader() {
@@ -116,7 +137,6 @@ export default class LsChat {
             user: this.props.user,
             interfaceTexts: this.props.interfaceTexts,
             messageDateFormat: this.props.messageDateFormat,
-            onReachEndOfMessagesList: this.props.onReachEndOfMessagesList,
 
         })
         this.body.render(this.main)
@@ -143,6 +163,10 @@ export default class LsChat {
         this.body.setIsLoading(isLoading)
     }
 
+    public setIsFetching = (isFetching?: boolean) => {
+        this.body.setIsFetching(isFetching)
+    }
+
     public setIsTyping = (isLoading?: boolean) => {
         this.body.setIsTyping(isLoading)
     }
@@ -152,6 +176,13 @@ export default class LsChat {
     }
 
     public destroy = () => {
-        this.main.remove()
+        this.isScrollEventAlreadySet = false
+
+        const existent = document.querySelector('.ls-chat')
+        
+        if (existent) {
+            existent.querySelector('main').removeEventListener('scroll', this.scrollEventListener)
+            existent.remove()
+        }
     }
 }

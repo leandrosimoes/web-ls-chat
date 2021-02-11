@@ -297,22 +297,33 @@
     flex-direction: column;
 }
 
+.ls-chat-fetching-indicator-wrap,
 .ls-chat-typing-indicator-wrap {
     width: 100%;
     justify-content: center;
     margin: 15px 0;
     position: absolute;
+}
+
+.ls-chat-typing-indicator-wrap {
     bottom: 0;
     left: 0;
 }
 
+.ls-chat-fetching-indicator-wrap {
+    top: 0;
+    left: 0;
+}
+
 .ls-chat-typing-indicator-wrap,
+.ls-chat-fetching-indicator-wrap,
 .ls-chat-loading-indicator-wrap {
     display: flex;
     flex-direction: row;
 }
 
 .ls-chat-typing-indicator,
+.ls-chat-fetching-indicator,
 .ls-chat-loading-indicator {
     width: 5px;
     height: 5px;
@@ -323,14 +334,17 @@
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
     animation-play-state: running;
+    background-color: transparent;
 }
 
 .ls-chat-typing-indicator.indicator2,
+.ls-chat-fetching-indicator.indicator2,
 .ls-chat-loading-indicator.indicator2 {
     animation-delay: .2s;
 }
 
 .ls-chat-typing-indicator.indicator3,
+.ls-chat-fetching-indicator.indicator3,
 .ls-chat-loading-indicator.indicator3 {
     animation-delay: .4s;
 }

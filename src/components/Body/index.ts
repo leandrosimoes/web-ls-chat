@@ -1,6 +1,7 @@
 import { IBodyProps, ILsChatMessage, ILsChatUser } from "../../interfaces";
 import BaseComponent from '../BaseComponent'
 import EmptyMessages from "../EmptyMessages";
+import FetchingIndicator from "../FetchingIndicator";
 import TypingIndicator from "../TypingIndicator";
 import Controls from "./Controls";
 import Message from "./Message";
@@ -8,6 +9,7 @@ import Message from "./Message";
 export default class Body extends BaseComponent {
     private props: IBodyProps
     private typingIndicator: TypingIndicator
+    private fetchingIndicator: FetchingIndicator
     private controls: Controls
 
     constructor(props: IBodyProps) {
@@ -107,6 +109,14 @@ export default class Body extends BaseComponent {
         }
     }
 
+    public setIsFetching = (isFeching?: boolean) => {
+        if (!isFeching) {
+            this.fetchingIndicator.element.style.display = 'none'
+        } else {
+            this.fetchingIndicator.element.style.display = 'flex'
+        }
+    }
+
     public selectMessage = (message?: ILsChatMessage) => {      
         const existentControls = (this.element.querySelectorAll('.ls-chat-controls') || [])[0]
 
@@ -151,6 +161,10 @@ export default class Body extends BaseComponent {
         this.typingIndicator = new TypingIndicator()
         this.typingIndicator.render(this.element)
         this.typingIndicator.element.style.display = 'none'
+
+        this.fetchingIndicator = new FetchingIndicator()
+        this.fetchingIndicator.render(this.element)
+        this.fetchingIndicator.element.style.display = 'none'
 
         if (this.props.messages?.length > 0) {
             this.setMessages(this.props.messages)
