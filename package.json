@@ -2,7 +2,7 @@
   "name": "web-ls-chat",
   "version": "1.0.0",
   "main": "lib/index.js",
-  "typings": "lib/index.d.js",
+  "typings": "lib/index.d.ts",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./dist && rm -rf ./lib",
