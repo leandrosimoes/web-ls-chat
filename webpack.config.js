@@ -4,12 +4,13 @@ const mode = isProduction ? 'production' : 'development'
 module.exports = {
     mode,
     entry: {
-        '../dist/index': './src/index',
-        '../docs/js/index': './src/index',
+        '../dist/ls-chat.min': './src/index',
+        '../docs/js/ls-chat.min': './src/index',
     },
     output: {
         filename: '[name].js',
     },
+    devtool: 'source-map',
     resolve: {
         extensions: ['.ts', '.js'],
     },

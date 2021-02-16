@@ -5,4 +5,4 @@ import './styles/ls-chat.css'
     window.LsChat = LsChat
 })(typeof window !== typeof undefined ? window : {})
 
-export { LsChat }
+export default LsChat
