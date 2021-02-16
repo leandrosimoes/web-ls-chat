@@ -24,6 +24,20 @@
                         title: 'Example Chat!',
                         onCloseButtonPress: () => {
                             this.lsChat.destroy()
+
+                            let count = 3
+                            const destroyMessage = '<div class="destroyed">LsChat destroyed.<br>Reloading in {{count}} seconds</div>'
+
+                            container.innerHTML = destroyMessage.replace('{{count}}', count)
+
+                            setInterval(() => {
+                                if (count <= 1) {
+                                    window.location.reload()
+                                } else {
+                                    count -= 1
+                                    container.innerHTML = destroyMessage.replace('{{count}}', count)
+                                }
+                            }, 1000)
                         },
                     },
                     onSendMessage: async (message) => {
