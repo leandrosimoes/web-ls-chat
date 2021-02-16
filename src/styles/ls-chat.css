@@ -46,7 +46,6 @@
     display: flex;
     flex-direction: column-reverse;
     flex: 1;
-    max-height: 75vh;
     overflow: auto;
     position: relative;
     overflow: hidden;
@@ -59,7 +58,6 @@
     overflow: auto;
     position: relative;
     padding-bottom: 35px;
-    max-height: 75vh;
 }
 
 .ls-chat-header {
