@@ -6,10 +6,11 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./dist && rm -rf ./lib",
-    "build-ts": "tsc -d --outDir lib --sourceMap false",
-    "build": "npm run clean && webpack --mode production && npm run build-ts",
-    "build-prod": "npm run clean && webpack --mode production && npm run build-ts",
-    "build-dev": "npm run clean && webpack --mode development && npm run build-ts",
+    "compile": "tsc -d --outDir lib --sourceMap false",
+    "prepare": "npm run compile",
+    "build": "npm run clean && webpack --mode production && npm run compile",
+    "build-prod": "npm run clean && webpack --mode production && npm run compile",
+    "build-dev": "npm run clean && webpack --mode development && npm run compile",
     "build-watch": "npm run clean && webpack --mode development --watch"
   },
   "devDependencies": {
