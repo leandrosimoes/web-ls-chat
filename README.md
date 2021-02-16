@@ -1,6 +1,7 @@
 # web-ls-chat
 Web version of [react-native-ls-chat](https://github.com/leandrosimoes/react-native-ls-chat)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/4030043d28fc44c2a26ac1de183630fc)](https://www.codacy.com/gh/leandrosimoes/web-ls-chat/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leandrosimoes/web-ls-chat&amp;utm_campaign=Badge_Grade)
 [![npm version](https://badge.fury.io/js/web-ls-chat.svg)](https://badge.fury.io/js/web-ls-chat)
 ![Node CI](https://github.com/leandrosimoes/web-ls-chat/workflows/Node%20CI/badge.svg)
 ![Node.js Package](https://github.com/leandrosimoes/web-ls-chat/workflows/Node%2Ejs%20Package/badge.svg)
