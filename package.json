@@ -1,12 +1,12 @@
 {
   "name": "web-ls-chat",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./dist && rm -rf ./lib",
-    "build-ts": "tsc -d --outDir ./lib --sourceMap false",
+    "build-ts": "tsc -d --outDir lib --sourceMap false",
     "build": "npm run clean && webpack --mode production && npm run build-ts",
     "build-prod": "npm run clean && webpack --mode production && npm run build-ts",
     "build-dev": "npm run clean && webpack --mode development && npm run build-ts",

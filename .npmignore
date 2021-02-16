@@ -1,7 +1,11 @@
+.github/
 dist/
 docs/
 node_modules/
 src/
 *.json
 *.config.js
-.preetierrc
+*.preetierrc
+*.eslintrc
+*.gitignore
+*.yml
