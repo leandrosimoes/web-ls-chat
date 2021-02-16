@@ -7,7 +7,7 @@ Web version of [react-native-ls-chat](https://github.com/leandrosimoes/react-nat
 
 ### JS File
 
-[ls-chat.min.js](https://raw.githubusercontent.com/leandrosimoes/web-ls-chat/main/dist/ls-chat.min.js)
+[ls-chat.min.js](https://raw.githubusercontent.com/leandrosimoes/web-ls-chat/master/dist/ls-chat.min.js)
 
 ### Library
 
