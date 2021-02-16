@@ -1,6 +1,10 @@
 # web-ls-chat
 Web version of [react-native-ls-chat](https://github.com/leandrosimoes/react-native-ls-chat)
 
+[![npm version](https://badge.fury.io/js/web-ls-chat.svg)](https://badge.fury.io/js/web-ls-chat)
+![Node CI](https://github.com/leandrosimoes/web-ls-chat/workflows/Node%20CI/badge.svg)
+![Node.js Package](https://github.com/leandrosimoes/web-ls-chat/workflows/Node%2Ejs%20Package/badge.svg)
+
 [Live sample](https://lesimoes.dev/web-ls-chat/)
 
 ## Instalation

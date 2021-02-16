@@ -5,3 +5,4 @@ exclude_paths:
   - 'dist/**'
   - 'docs/**'
   - '**.md'
+  - '**.css'
