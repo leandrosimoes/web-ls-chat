@@ -1,14 +1,16 @@
 {
   "name": "web-ls-chat",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production",
-    "build-prod": "webpack --mode production",
-    "build-dev": "webpack --mode development",
-    "build-watch": "webpack --mode development --watch",
-    "test": "yarn jest"
+    "clean": "rm -rf ./dist && rm -rf ./lib",
+    "build-ts": "tsc -d --outDir ./lib --sourceMap false",
+    "build": "npm run clean && webpack --mode production && npm run build-ts",
+    "build-prod": "npm run clean && webpack --mode production && npm run build-ts",
+    "build-dev": "npm run clean && webpack --mode development && npm run build-ts",
+    "build-watch": "npm run clean && webpack --mode development --watch"
   },
   "devDependencies": {
     "@types/jest": "^26.0.19",
