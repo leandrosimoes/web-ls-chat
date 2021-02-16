@@ -20,6 +20,9 @@ or
 ## Usage
 
 ```javascript
+// If you are using the library you must import the library otherwise it will be available globally in `window`
+import LsChat from 'web-ls-chat'
+
 const options = {
     user: {
         id: '1',
@@ -30,24 +33,35 @@ const options = {
     messages: [],
     isLoading: false,
     isFetching: false,
+    isTyping: false,
     theme: 'DARK', // 'DARK' or 'LIGHT'
     headerProps: {
         isVisible: true,
         imageSource: 'https://header-image.uri',
         title: 'Chat title',
-        onCloseButtonPress: () => {},
+        onCloseButtonPress: () => { ... },
     onSendMessage: async (message) => {
-        return message
+        return message // must return the message
     },
     onSuccessSendMessage: async (message) => { ... },
     onErrorSendMessage: async (message, error) => { ... },
     onDeleteMessage: async (message) => {
-        return message
+        return message // must return the message
     },
     onSuccessDeleteMessage: (message) => { ... },
     onErrorDeleteMessage: (error) => { ... },
     onReachEndOfMessagesList: async () => { ... }
 }
 
-window.lsChat = new LsChat(options)
+// Create a instance of LsChat
+const lsChat = new LsChat(options)
+
+
+// Methods
+lsChat.setTitle('New Title')
+lsChat.setMessages(newMessagesArray)
+lsChat.setIsLoading(true)
+lsChat.setIsFetching(true)
+lsChat.setIsTyping(true)
+lsChat.destroy()
 ```
