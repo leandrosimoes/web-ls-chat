@@ -49,12 +49,10 @@
 }
 
 .ls-chat-body main {
-    display: flex;
-    flex-direction: column-reverse;
     flex: 1;
+    height: 100%;
     overflow: hidden;
     position: relative;
-    min-height: 100%;
     padding-bottom: 30px;
 }
 
@@ -291,6 +289,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    height: 100%;
 }
 
 .ls-chat-fetching-indicator-wrap,
