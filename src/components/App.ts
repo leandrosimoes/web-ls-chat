@@ -14,6 +14,7 @@ export default class LsChat {
     private header: Header
     private replyingMessage?: ILsChatMessage
     private isScrollEventAlreadySet: boolean
+    private isFetching: boolean
 
     constructor(props: IChatProps) {
         this.props = props
@@ -67,18 +68,16 @@ export default class LsChat {
         }
     }
     
-    private scrollEventListener =  (event: any) => {
-        const isEndReached = (event.target.scrollHeight + event.target.scrollTop - event.target.offsetHeight - 1) <= 0
+    private scrollEventHandler =  (event: any) => {
+        if (this.props.isLoading || this.isFetching || event.target.scrollHeight <= 0 || !this.props.onReachEndOfMessagesList || typeof this.props.onReachEndOfMessagesList !== 'function') return
 
-        if (isEndReached && this.props.onReachEndOfMessagesList && typeof this.props.onReachEndOfMessagesList === 'function') {
-            this.props.onReachEndOfMessagesList()
-        }
+        if (event.target.scrollTop === 0) this.props.onReachEndOfMessagesList()
     }
 
     private setScrollListener = () => {
         if (this.isScrollEventAlreadySet) return
 
-        document.querySelector('.ls-chat main').addEventListener('scroll', this.scrollEventListener)
+        document.querySelector('.ls-chat-body').addEventListener('scroll', this.scrollEventHandler)
 
         this.isScrollEventAlreadySet = true
     }
@@ -112,7 +111,7 @@ export default class LsChat {
             },
         })
 
-        replyingMessage.render(this.body.element)
+        replyingMessage.render(document.querySelector('.ls-chat'))
     }
 
     private onSendMessage = async (message: ILsChatMessage) => {
@@ -155,15 +154,22 @@ export default class LsChat {
         footer.render(this.main)
     }
 
-    public setMessages = (messages: ILsChatMessage[]) => {
-        this.body.setMessages(messages)
+    public setMessages = (messages: ILsChatMessage[], keepScrollPosition?: boolean) => {
+        this.props.isLoading = false
+        this.isFetching = false
+
+        this.body.setMessages(messages, keepScrollPosition)
     }
 
     public setIsLoading = (isLoading?: boolean) => {
+        this.props.isLoading = isLoading
+
         this.body.setIsLoading(isLoading)
     }
 
     public setIsFetching = (isFetching?: boolean) => {
+        this.isFetching = isFetching
+
         this.body.setIsFetching(isFetching)
     }
 
@@ -181,7 +187,7 @@ export default class LsChat {
         const existent = document.querySelector('.ls-chat')
         
         if (existent) {
-            existent.querySelector('main').removeEventListener('scroll', this.scrollEventListener)
+            existent.querySelector('main').removeEventListener('scroll', this.scrollEventHandler)
             existent.remove()
         }
     }

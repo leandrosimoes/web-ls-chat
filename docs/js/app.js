@@ -105,7 +105,7 @@
                         const prevMessages = await getPrevRandomMessages(users)
                         messages = [...prevMessages, ...messages]
 
-                        window.lsChat.setMessages(messages)
+                        window.lsChat.setMessages(messages, true)
                         window.lsChat.setIsFetching(false)
                     }
                 }

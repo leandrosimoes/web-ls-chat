@@ -31,11 +31,13 @@ export default class Body extends BaseComponent {
         emptyMessages.render(main)
     }
 
-    public setMessages = (messages: ILsChatMessage[]) => {
+    public setMessages = (messages: ILsChatMessage[], keepScrollPosition?: boolean) => {
         if (!messages || messages.length === 0) {
             this.setupEmptyMessages()
             return
         }
+
+        const lastScrollHeight = this.element.scrollHeight
         
         const { user } = this.props
 
@@ -68,6 +70,12 @@ export default class Body extends BaseComponent {
         formatedMessages.reverse().forEach((message) => {
             message.render(main)
         })
+
+        if (!keepScrollPosition) {
+            this.element.scrollTo(0, this.element.scrollHeight)
+        } else {
+            this.element.scrollTo(0, this.element.scrollHeight - lastScrollHeight)
+        }
     }
 
     public setIsLoading = (isLoading?: boolean) => {
@@ -117,8 +125,8 @@ export default class Body extends BaseComponent {
         }
     }
 
-    public selectMessage = (message?: ILsChatMessage) => {      
-        const existentControls = (this.element.querySelectorAll('.ls-chat-controls') || [])[0]
+    public selectMessage = (message?: ILsChatMessage) => {
+        const existentControls = (document.querySelectorAll('.ls-chat-controls') || [])[0]
 
         if (existentControls) {
             existentControls.classList.remove('shown')
@@ -142,7 +150,7 @@ export default class Body extends BaseComponent {
             user: this.props.user,
         })
 
-        this.controls.render(this.element)
+        this.controls.render(document.querySelector('.ls-chat'))
 
         setTimeout(() => {
             this.controls.element.classList.add('shown')
